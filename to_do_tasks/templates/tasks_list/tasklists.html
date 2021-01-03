@@ -13,7 +13,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Last Updated</th>
                     <th scope="col">Created At</th>
@@ -23,18 +23,17 @@
             <tbody>
                 {% for list in lists %}
                 <tr>
-                    <th scope="row">{{loop.index}}</th>
-                    <td>{{list['id']}}</td>
+                    <th scope="row">{{list['id']}}</th>
                     <td>{{list['name']}}</td>
                     <td>{{list['last_updated']}}</td>
                     <td>{{list['created_at']}}</td>
-                   {# <!-- <td><a href="/tasks/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
-                                class="far fa-eye"></i></a>
-                        <a href="/deletetasklist/{{loop.index}}" class="btn btn-secondary" type="submit"
-                            role="button"><i class="fas fa-trash"></i></a>
-                        <a href="/editname/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
+                    <td>{# <!-- <a href="/tasks/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
+                                class="far fa-eye"></i></a>--> #}
+                        <a href="/deletetasklist/{{list['id']}}" class="btn btn-secondary" type="submit"
+                            role="button"><i class="fas fa-trash"></i></a> 
+                        <a href="/editname/{{list['id']}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="fas fa-user-edit"></i></a>
-                    </td> --> #}
+                    </td> 
                 </tr>
                 {% endfor %}
             </tbody>
