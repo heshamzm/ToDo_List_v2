@@ -1,5 +1,5 @@
-from status import Status       
-from priority import Priority
+# from status import Status       
+# from priority import Priority
 from flask import Flask, render_template, redirect, url_for, request, Blueprint
 import sqlite3
 import datetime

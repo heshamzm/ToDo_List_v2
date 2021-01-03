@@ -24,10 +24,10 @@
                 {% for list in lists %}
                 <tr>
                     <th scope="row">{{loop.index}}</th>
-                    <td>{{lists['id']}}</td>
-                    <td>{{lists['name']}}</td>
-                    <td>{{lists['last_updated']}}</td>
-                    <td>{{lists['created_at']}}</td>
+                    <td>{{list['id']}}</td>
+                    <td>{{list['name']}}</td>
+                    <td>{{list['last_updated']}}</td>
+                    <td>{{list['created_at']}}</td>
                    {# <!-- <td><a href="/tasks/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="far fa-eye"></i></a>
                         <a href="/deletetasklist/{{loop.index}}" class="btn btn-secondary" type="submit"

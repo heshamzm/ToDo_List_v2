@@ -1,5 +1,5 @@
-from status import Status       
-from priority import Priority
+# from status import Status       
+# from priority import Priority
 from flask import Flask, render_template, redirect, url_for, request, Blueprint
 import sqlite3
 import datetime
@@ -18,7 +18,7 @@ def task_lists():
     # connecting to the database
     db = get_db()
 
-    lists = db.excute("SELECT * FROM taskslist").fetchall()
+    lists = db.execute("SELECT * FROM taskslist").fetchall()
 
     return render_template("tasks_list/tasklists.html", lists = lists)
 
