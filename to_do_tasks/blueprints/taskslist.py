@@ -8,6 +8,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators, TextAreaField
 from to_do_tasks.db import get_db
 
+
+
 # define our blueprint
 taskslist_bp = Blueprint('taskslist', __name__)
 
@@ -15,6 +17,11 @@ taskslist_bp = Blueprint('taskslist', __name__)
 class EditNameForm(FlaskForm):
     new_name = StringField("New Name: ", [validators.InputRequired()])
     submit = SubmitField("Edit Name")
+
+
+class CreateTaskList(FlaskForm):
+    name = StringField("Name : ", [validators.InputRequired()])
+    submit = SubmitField("Create")
 
 
 
@@ -43,7 +50,7 @@ def edit_tasklist_name(index):
         # connecting to the database
         db = get_db()
 
-        db.execute(f"UPDATE taskslist SET name = '{new_name}' WHERE id = '{index}' ")
+        db.execute(f"UPDATE taskslist SET name = '{new_name}' , last_updated = '{datetime.datetime.now()}' WHERE id = '{index}' ")
             
         db.commit()
 
@@ -67,14 +74,22 @@ def delete_tasklist(index):
 
 
 
-# @taskslist_bp.route("/createtasklist" , methods = ["GET","POST"])
-# def create_tasklist():
-#     if request.method == "GET":
-#         return render_template("tasks_list/create_tasklist.html")
-#     else:
-        
-#         time_created = datetime.datetime.now()
-#         time_updated = datetime.datetime.now()
-#         new_name=request.form["name"]
-#         tasklists.update({'len(tasklists) +1':{'name': new_name,'last_updated':time_updated,'created_at':time_created}})
-#         return redirect(url_for('task_lists'))
+
+@taskslist_bp.route("/createtasklist" , methods = ["GET","POST"])
+def create_tasklist():
+    create_tasklist = CreateTaskList()
+
+    if create_tasklist.validate_on_submit():
+
+        name = create_tasklist.name.data
+
+        # connecting to the database
+        db = get_db()
+
+        db.execute("INSERT INTO taskslist (name) VALUES (?);" , (name,))
+            
+        db.commit()
+
+        return redirect(url_for('taskslist.task_lists'))
+
+    return render_template("tasks_list/create_tasklist.html", form = create_tasklist )

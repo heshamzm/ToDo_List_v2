@@ -9,14 +9,12 @@
 
         <center>
             <form method="POST" class="form-group">
+                {{ form.hidden_tag() }}
 
-                <label>
-                    <h5> Task List Name : </h5>
-                </label>
+                {{ form.name.label }}
+                {{ form.name() }}
 
-                <input type="text" name="name" placeholder="Please enter new task list name" style="width:30%">
-                <br>
-                <button type="submit" class="btn btn-secondary">Create Task List</button>
+                {{ form.submit() }}
 
 
             </form>
