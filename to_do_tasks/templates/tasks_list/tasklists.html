@@ -21,19 +21,20 @@
                 </tr>
             </thead>
             <tbody>
-                {% for tasklist in tasklists %}
+                {% for list in lists %}
                 <tr>
                     <th scope="row">{{loop.index}}</th>
-                    <td>{{tasklists[tasklist]['name']}}</td>
-                    <td>{{tasklists[tasklist]['last_updated']}}</td>
-                    <td>{{tasklists[tasklist]['created_at']}}</td>
-                    <td><a href="/tasks/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
+                    <td>{{lists['id']}}</td>
+                    <td>{{lists['name']}}</td>
+                    <td>{{lists['last_updated']}}</td>
+                    <td>{{lists['created_at']}}</td>
+                   {# <!-- <td><a href="/tasks/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="far fa-eye"></i></a>
                         <a href="/deletetasklist/{{loop.index}}" class="btn btn-secondary" type="submit"
                             role="button"><i class="fas fa-trash"></i></a>
                         <a href="/editname/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="fas fa-user-edit"></i></a>
-                    </td>
+                    </td> --> #}
                 </tr>
                 {% endfor %}
             </tbody>

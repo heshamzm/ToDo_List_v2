@@ -28,6 +28,17 @@ def create_app(test_config=None):
 
 
 
- # import helper DB functions
+    # import helper DB functions
     from . import db
     db.init_app(app)    
+
+
+    # register the 'tasks' blueprint
+    from .blueprints.tasks import tasks_bp
+    app.register_blueprint(tasks_bp)
+
+    # register the 'taskslist' blueprint
+    from .blueprints.taskslist import taskslist_bp
+    app.register_blueprint(taskslist_bp)
+
+    return app

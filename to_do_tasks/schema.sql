@@ -1,15 +1,13 @@
 BEGIN TRANSACTION;
-DROP TABLE IF EXISTS "tasklists";
-CREATE TABLE IF NOT EXISTS "tasklists" (
+DROP TABLE IF EXISTS "taskslist";
+CREATE TABLE IF NOT EXISTS "taskslist" (
 	"id"	INTEGER,
-    "author_id"	INTEGER NOT NULL,
+	"name"	TEXT NOT NULL UNIQUE,
     "last_updated"	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"created_at"	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"tasks"	INTEGER NOT NULL,
-    FOREIGN KEY("author_id") REFERENCES "tasks"("id"),
 	PRIMARY KEY("id" AUTOINCREMENT)
-    
 );
+
 DROP TABLE IF EXISTS "tasks";
 CREATE TABLE IF NOT EXISTS "tasks" (
 	"id"	INTEGER,
@@ -19,5 +17,18 @@ CREATE TABLE IF NOT EXISTS "tasks" (
 	"status"	TEXT,
 	"priority"	TEXT,
     "description" TEXT,
+	"taskslist_id"	INTEGER NOT NULL,
+	FOREIGN KEY("taskslist_id") REFERENCES "taskslist"("id"),
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
+
+INSERT INTO "taskslist" VALUES (1,"Python list","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000");
+INSERT INTO "taskslist" VALUES (2,"Home list","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000");
+
+INSERT INTO "tasks" VALUES (1,"learn flask blueprints","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",1);
+INSERT INTO "tasks" VALUES (2,"learn Python enums","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",1);
+INSERT INTO "tasks" VALUES (3,"revise OOP concepts","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",1);
+INSERT INTO "tasks" VALUES (4,"clean keyboard","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",2);
+INSERT INTO "tasks" VALUES (5,"water plants","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",2);
+
+COMMIT;
