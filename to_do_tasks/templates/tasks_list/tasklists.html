@@ -27,8 +27,8 @@
                     <td>{{list['name']}}</td>
                     <td>{{list['last_updated']}}</td>
                     <td>{{list['created_at']}}</td>
-                    <td>{# <!-- <a href="/tasks/{{loop.index}}" class="btn btn-secondary" type="submit" role="button"><i
-                                class="far fa-eye"></i></a>--> #}
+                    <td><a href="/tasks/{{list['id']}}" class="btn btn-secondary" type="submit" role="button"><i
+                                class="far fa-eye"></i></a>
                         <a href="/deletetasklist/{{list['id']}}" class="btn btn-secondary" type="submit"
                             role="button"><i class="fas fa-trash"></i></a> 
                         <a href="/editname/{{list['id']}}" class="btn btn-secondary" type="submit" role="button"><i

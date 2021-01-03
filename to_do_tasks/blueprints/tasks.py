@@ -6,15 +6,21 @@ import datetime
 from functools import wraps
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators, TextAreaField
+from to_do_tasks.db import get_db
 
 # define our blueprint
 tasks_bp = Blueprint('tasks', __name__)
 
+
 # task routing
-# @tasks_bp.route("/tasks/<int:index>")
-# def tasks_(index):
-#     task_list = tasklists[index]["tasks"]
-#     return render_template("tasks/tasks.html", tasks = tasks, task_list = task_list, general_index = index)
+@tasks_bp.route("/tasks/<int:list_index>")
+def tasks_(list_index):
+
+    db = get_db()
+    tasks = db.execute(f"SELECT * FROM tasks WHERE taskslist_id = {list_index}").fetchall()
+
+
+    return render_template("tasks/tasks.html", tasks = tasks)
 
 
 
@@ -36,11 +42,21 @@ tasks_bp = Blueprint('tasks', __name__)
 
 
 
-# @tasks_bp.route("/deletetask/<int:index>/<int:general_index>")
-# def delete_task(index, general_index):
-#     tasklists[general_index]["tasks"].remove(index)
-#     tasks.pop(index)
-#     return redirect(url_for("tasks_", index = general_index))
+@tasks_bp.route("/deletetask/<int:index>")
+def delete_task(index):
+
+    db = get_db()
+
+    task_list_id = db.execute("SELECT taskslist_id FROM tasks WHERE id LIKE ? " ,(index,)).fetchone()   
+    db.execute(f"DELETE FROM tasks WHERE id = '{index}' ")
+    print(task_list_id)     
+    db.commit()
+
+    return redirect(url_for('tasks.tasks_' , list_index = task_list_id['taskslist_id']))
+    #https://stackoverflow.com/questions/53126234/why-does-a-database-query-in-python-not-return-an-integer-value
+
+
+
 
 # @tasks_bp.route("/createtask/<int:index>", methods=["POST" , "GET"])
 # def create_task(index):
