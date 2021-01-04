@@ -35,18 +35,18 @@
                     <td>{{task['priority']}}</td>
                    <td> <a href="/deletetask/{{task['id']}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="fas fa-trash"></i></a> 
-                                {# <!--  <a href="/edittask/{{index}}/{{general_index}}" class="btn btn-secondary" type="submit" role="button"><i
+                        <a href="/edittask/{{task['id']}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="fas fa-user-edit"></i></a>
-                      --> #} </td>
+                    </td>
                 </tr>
                 
                 {% endfor %}
             </tbody>
         </table>
         <center>
-         {#   <!-- <a href="/createtask/{{general_index}}" class="btn btn-secondary" type="submit" role="button"><i class="fas fa-plus"></i>
+         <a href="/createtask/{{list_index}}" class="btn btn-secondary" type="submit" role="button"><i class="fas fa-plus"></i>
                 Create New
-                Task</a> --> #}
+                Task</a>
         </center>
     </div>
 </div>

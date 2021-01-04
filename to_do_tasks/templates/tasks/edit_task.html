@@ -7,32 +7,31 @@
 <div class="container">
     <div class="jumbotron mt-5">
 
-        <center>
-        <form method="POST"  class="form-group">
 
-            <label><h5> New Task Name: </h5></label>
-
-            <input type="text" name="name" placeholder="Please enter new task name" style="width:30%">
-            <br>
-
-            <label><h5> New Description: </h5></label>
-
-            <input type="text" name="description" placeholder="Please enter new task description" style="width:30%">
-            <br>
-
-            <label><h5> New Status : </h5></label>
-
+        <form method="POST" class="form-group">
+            {{ form.hidden_tag() }}
             
-                <input type="radio" id="m" name="status" value="Status.IN_PROGRESS">
-                <label >IN_PROGRESS</label>
-                <input type="radio" id="h" name="status" value="Status.DONE">
-                <label >DONE</label><br>
-
-
-            <button type="submit" class="btn btn-secondary">Submit</button>
-
+                {{ form.new_name.label }}
+                <br>
+                {{ form.new_name() }}
+                <br>
+                <hr>
             
-        </form></center>
+                {{ form.new_description.label }}
+                <br>
+                {{ form.new_description() }}
+                <hr>
+            
+            
+            {{form.priority.label}}{{ form.priority()}}
+            <hr>
+            {{form.status.label}}{{ form.status()}}
+            <center>
+                {{ form.submit() }}
+            </center>
+
+
+        </form>
 
 
     </div>
