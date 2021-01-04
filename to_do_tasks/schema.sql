@@ -22,13 +22,22 @@ CREATE TABLE IF NOT EXISTS "tasks" (
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
+
+DROP TABLE IF EXISTS "users";
+CREATE TABLE IF NOT EXISTS "users" (
+	"id"	INTEGER,
+	"username"	TEXT NOT NULL UNIQUE,
+	"password" password NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
 INSERT INTO "taskslist" VALUES (1,"Python list","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000");
 INSERT INTO "taskslist" VALUES (2,"Home list","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000");
 
-INSERT INTO "tasks" VALUES (1,"learn flask blueprints","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",1);
-INSERT INTO "tasks" VALUES (2,"learn Python enums","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",1);
-INSERT INTO "tasks" VALUES (3,"revise OOP concepts","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",1);
-INSERT INTO "tasks" VALUES (4,"clean keyboard","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",2);
-INSERT INTO "tasks" VALUES (5,"water plants","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","","","",2);
+INSERT INTO "tasks" VALUES (1,"learn flask blueprints","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","Done","Medium","",1);
+INSERT INTO "tasks" VALUES (2,"learn Python enums","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","In progress","High","",1);
+INSERT INTO "tasks" VALUES (3,"revise OOP concepts","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","Done","Low","",1);
+INSERT INTO "tasks" VALUES (4,"clean keyboard","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","New","High","",2);
+INSERT INTO "tasks" VALUES (5,"water plants","2012-04-23 18:25:43.511000","2012-04-23 18:25:43.511000","Done","Medium","",2);
 
 COMMIT;

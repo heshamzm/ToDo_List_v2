@@ -5,7 +5,7 @@ import sqlite3
 import datetime
 from functools import wraps
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, validators, TextAreaField,RadioField
+from wtforms import StringField, SubmitField, validators, TextAreaField,RadioField , SelectField
 from to_do_tasks.db import get_db
 
 # define our blueprint
@@ -17,12 +17,17 @@ class EditTaskForm(FlaskForm):
     status = RadioField('Status:', choices=['New','In progress','Done'])
     priority = RadioField('Priority:', choices=['Low','Medium','High'])
     submit = SubmitField("Edit Task")
+    # myfield = SelectField('myfield', choices = [2])
+
 
 class CreateTaskForm(FlaskForm):
     new_name = StringField("New Name: ", [validators.InputRequired()])
     new_description = TextAreaField("New Description: ", [validators.InputRequired()])
     priority = RadioField('Priority:', choices=['Low','Medium','High'])
     submit = SubmitField("Create Task")
+
+
+
 
 # task routing
 @tasks_bp.route("/tasks/<int:list_index>")
@@ -49,8 +54,13 @@ def edit_task(index):
         priority = edit_task_form.priority.data
         # connecting to the database
         db = get_db()
-
+        # myfield = edit_task_form.myfield.data
+        # edit_task_form.myfield.choices = db.execute("SELECT name FROM taskslist").fetchall() 
+        # edit_task_form.myfield.choices = [(myfield.id , myfield.name) for myfield in taskslist.query.all()]
+        # print("hi")
+        # print(edit_task_form.myfield.choices)
         # when return to view we have to till him which tasklist we are in.
+        
         task_list_id = db.execute("SELECT taskslist_id FROM tasks WHERE id LIKE ? " ,(index,)).fetchone()
 
         db.execute(f"UPDATE tasks SET name = '{new_name}',status = '{status}',priority = '{priority}' , last_updated = '{datetime.datetime.now()}', description = '{new_description}' WHERE id = '{index}' ")
@@ -63,8 +73,6 @@ def edit_task(index):
     return render_template("tasks/edit_task.html", form = edit_task_form)
 
     
-
-
 
 @tasks_bp.route("/deletetask/<int:index>")
 def delete_task(index):

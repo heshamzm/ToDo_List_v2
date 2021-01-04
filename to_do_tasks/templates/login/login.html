@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+<!-- header block -->
+<h1>{% block title %}Login{% endblock %}</h1>
+
+<!-- content block -->
+
+{% block content %}
+<center>
+<div class="container">
+    <div class="jumbotron mt-5">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            {{form.username.label}} <br>
+            {{form.username()}}
+            <hr>
+            <br>
+            {{form.password.label}}
+            <br>
+            {{form.password()}}
+            <hr>
+            {{form.submit()}}
+        </form>
+    </div>
+</div>
+</center>
+{% endblock %}

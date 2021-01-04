@@ -41,4 +41,10 @@ def create_app(test_config=None):
     from .blueprints.taskslist import taskslist_bp
     app.register_blueprint(taskslist_bp)
 
+
+# register the 'user' blueprint
+    from .blueprints.user import user_bp
+    app.register_blueprint(user_bp)
+
+
     return app

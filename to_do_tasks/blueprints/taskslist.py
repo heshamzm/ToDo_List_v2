@@ -24,7 +24,7 @@ class CreateTaskList(FlaskForm):
 
 
 # tasklist routing
-@taskslist_bp.route("/")
+@taskslist_bp.route("/task_list")
 def task_lists():
 
     # connecting to the database
