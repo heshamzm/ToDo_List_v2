@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+<!-- header block -->
+{% block header %}
+<h1>{% block title %}Add User{% endblock %}</h1>
+{% endblock %}
+
+<!-- content block -->
+{% block content %}
+<center>
+<div class="container">
+    <div class="jumbotron mt-5">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+
+            {{ form.username.label }}
+            {{ form.username() }}
+            
+            <hr>
+            <br>
+            {{ form.first_name.label }}
+            {{ form.first_name() }}
+            <hr>
+            <br>
+
+            {{ form.last_name.label }}
+            {{ form.last_name() }}
+            <hr>
+            <br>
+            {{ form.password.label }}
+            {{ form.password() }}
+            <hr>
+            <br>
+
+            {{ form.submit() }}
+        </form>
+    </div>
+</div>
+</center>
+{% endblock %}

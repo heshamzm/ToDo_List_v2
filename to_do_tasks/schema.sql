@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"id"	INTEGER,
 	"username"	TEXT NOT NULL UNIQUE,
 	"password" password NOT NULL,
+	"firstname" TEXT NOT NULL,
+	"lastname" TEXT NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 

@@ -109,3 +109,17 @@ def create_task(index):
           
         return redirect(url_for("tasks.tasks_",list_index = index))
     return render_template("tasks/create_task.html", form = create_task)
+
+
+@tasks_bp.route("/sorttask/<int:list_index>")
+def sort(list_index):
+
+    # connecting to the database
+    db = get_db()
+
+    tasks = db.execute('SELECT id, name, last_updated, created_at,status,priority,description'
+        ' FROM tasks'
+        ' ORDER BY name ASC'
+    ).fetchall()
+
+    return render_template("tasks/tasks.html", tasks = tasks, list_index = list_index)

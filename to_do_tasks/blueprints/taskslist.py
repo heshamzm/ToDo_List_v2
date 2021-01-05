@@ -91,3 +91,18 @@ def create_tasklist():
         return redirect(url_for('taskslist.task_lists'))
 
     return render_template("tasks_list/create_tasklist.html", form = create_tasklist )
+
+
+@taskslist_bp.route("/sort_list")
+def sort():
+
+    # connecting to the database
+    db = get_db()
+
+    lists = db.execute('SELECT id, name, last_updated, created_at'
+        ' FROM taskslist'
+        ' ORDER BY name ASC'
+    ).fetchall()
+
+    return render_template("tasks_list/tasklists.html", lists = lists)
+

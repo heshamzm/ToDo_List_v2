@@ -7,9 +7,14 @@
 
 <div class="container">
     <br>
-    <h5>Task Lists:</h5>
     <div class="jumbotron mt-3">
-      
+        <h5>Task Lists:</h5>
+        <a href="/sort_list" class="btn btn-secondary" type="submit" role="button"><i class="fas fa-sort"></i>
+            Sort TaskList</a>
+
+    </div>
+    <div class="jumbotron mt-3">
+
         <table class="table">
             <thead>
                 <tr>
@@ -30,10 +35,10 @@
                     <td><a href="/tasks/{{list['id']}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="far fa-eye"></i></a>
                         <a href="/deletetasklist/{{list['id']}}" class="btn btn-secondary" type="submit"
-                            role="button"><i class="fas fa-trash"></i></a> 
+                            role="button"><i class="fas fa-trash"></i></a>
                         <a href="/editname/{{list['id']}}" class="btn btn-secondary" type="submit" role="button"><i
                                 class="fas fa-user-edit"></i></a>
-                    </td> 
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -44,6 +49,7 @@
                 Create New TaskList</a>
         </center>
     </div>
+
 </div>
 
 {% endblock %}
