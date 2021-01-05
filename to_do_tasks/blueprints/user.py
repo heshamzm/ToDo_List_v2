@@ -9,17 +9,20 @@ from to_do_tasks.db import get_db
 # define our blueprint
 user_bp = Blueprint('user', __name__)
 
+#Create login WTForm
 class LoginForm(FlaskForm):
     username = StringField("Username : ", [validators.InputRequired()])
     password = PasswordField("Password : ", [validators.InputRequired()])
     submit = SubmitField("Log In")
 
+#Create user WTForm
 class AddUser(FlaskForm):
     username = StringField("Username : ", [validators.InputRequired()])
     password = PasswordField("Password : ", [validators.InputRequired()])
     first_name = StringField("first name : ", [validators.InputRequired()])
     last_name = StringField("last name : ", [validators.InputRequired()])
     submit = SubmitField("Add User")
+
 
 @user_bp.route('/add/user', methods=['GET', 'POST'])
 def add_user():
@@ -53,7 +56,6 @@ def add_user():
     return render_template('user/add.html' , form = user )
 
 
-
 @user_bp.route('/', methods =['POST','GET'])
 def login():
     login = LoginForm()
@@ -85,6 +87,7 @@ def login():
         
     return render_template('login/login.html', form = login)    
 
+
 @user_bp.route('/logout')
 def logout():
     # pop 'uid' from session
@@ -92,6 +95,7 @@ def logout():
 
     # redirect to index
     return redirect("/")
+
 
 @user_bp.route('/session')
 def show_session():
