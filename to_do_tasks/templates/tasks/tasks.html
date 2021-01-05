@@ -7,52 +7,58 @@
 
 <div class="container">
     <br>
-    <div class="jumbotron mt-3">
-        <h5>Tasks:</h5>
-        <a href="/sorttask" class="btn btn-secondary" type="submit" role="button"><i class="fas fa-sort"></i>
-            Sort Tasks</a>
+    <center>
+        <div class="jumbotron mt-3">
+            <div>
+                <h5>Tasks <a href="/sorttask/{{list_index}}" class="btn btn-secondary" type="submit" role="button"><i
+                            class="fas fa-sort"></i>
+                        Sort </a></h5>
+            </div>
+            <div></div>
+    </center>
 
-    </div>
-    <div class="jumbotron mt-3">
+</div>
+<div class="jumbotron mt-3">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Last Updated</th>
-                    <th scope="col">Created At</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col" style="width: 15%;">Options</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in tasks %}
-                <tr>
-                    <th scope="row">{{task['id']}}</th>
-                    <td>{{task['name']}}</td>
-                    <td>{{task['last_updated']}}</td>
-                    <td>{{task['created_at']}}</td>                    
-                    <td>{{task['description']}}</td>
-                    <td>{{task['status']}}</td>
-                    <td>{{task['priority']}}</td>
-                   <td> <a href="/deletetask/{{task['id']}}" class="btn btn-secondary" type="submit" role="button"><i
-                                class="fas fa-trash"></i></a> 
-                        <a href="/edittask/{{task['id']}}" class="btn btn-secondary" type="submit" role="button"><i
-                                class="fas fa-user-edit"></i></a>
-                    </td>
-                </tr>
-                
-                {% endfor %}
-            </tbody>
-        </table>
-        <center>
-         <a href="/createtask/{{list_index}}" class="btn btn-secondary" type="submit" role="button"><i class="fas fa-plus"></i>
-                Create New
-                Task</a>
-        </center>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last Updated</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Priority</th>
+                <th scope="col" style="width: 15%;">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <th scope="row">{{task['id']}}</th>
+                <td>{{task['name']}}</td>
+                <td>{{task['last_updated']}}</td>
+                <td>{{task['created_at']}}</td>
+                <td>{{task['description']}}</td>
+                <td>{{task['status']}}</td>
+                <td>{{task['priority']}}</td>
+                <td> <a href="/deletetask/{{task['id']}}" class="btn btn-secondary" title="Delete" type="submit"
+                        role="button"><i class="fas fa-trash"></i></a>
+                    <a href="/edittask/{{task['id']}}" class="btn btn-secondary" title="Edit" type="submit"
+                        role="button"><i class="fas fa-user-edit"></i></a>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    <center>
+        <a href="/createtask/{{list_index}}" class="btn btn-secondary" type="submit" role="button"><i
+                class="fas fa-plus"></i>
+            Create New
+            Task</a>
+    </center>
+</div>
 </div>
 {% endblock %}
