@@ -37,6 +37,7 @@ def task_lists():
 
 #Edit task list routing
 @taskslist_bp.route("/editname/<int:index>" , methods=["POST" , "GET"])
+@login_required
 def edit_tasklist_name(index):
 
     edit_name_form = EditNameForm()
@@ -58,6 +59,7 @@ def edit_tasklist_name(index):
 
 #Delete task list routing
 @taskslist_bp.route("/deletetasklist/<int:index>")
+@login_required
 def delete_tasklist(index):
 
     # connecting to the database
@@ -71,6 +73,7 @@ def delete_tasklist(index):
 
 #Create task list routing
 @taskslist_bp.route("/createtasklist" , methods = ["GET","POST"])
+@login_required
 def create_tasklist():
     create_tasklist = CreateTaskList()
 
@@ -91,6 +94,7 @@ def create_tasklist():
 
 #Sort task list routing
 @taskslist_bp.route("/sort_list")
+@login_required
 def sort():
 
     # connecting to the database

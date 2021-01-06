@@ -4,6 +4,7 @@ import datetime
 from functools import wraps
 from to_do_tasks.db import get_db
 from ..forms import LoginForm, AddUser
+from .taskslist import login_required
 
 # define our blueprint
 user_bp = Blueprint('user', __name__)
@@ -86,11 +87,13 @@ def login():
           
 
 @user_bp.route('/logout')
+@login_required
 def logout():
     session.clear()
     return redirect("/")
 
 
 @user_bp.route('/session')
+@login_required
 def show_session():
     return dict(session)

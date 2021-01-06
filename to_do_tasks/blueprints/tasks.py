@@ -4,12 +4,14 @@ import datetime
 from functools import wraps
 from to_do_tasks.db import get_db
 from ..forms import EditTaskForm, CreateTaskForm
+from .taskslist import login_required
 
 #Define our blueprint
 tasks_bp = Blueprint('tasks', __name__)
 
 #Tasks routing
 @tasks_bp.route("/tasks/<int:list_index>")
+@login_required
 def tasks_(list_index):
 
     #Get the DB connection
@@ -26,6 +28,7 @@ def tasks_(list_index):
 
 #Edit task routing
 @tasks_bp.route("/edittask/<int:index>", methods=["POST" , "GET"])
+@login_required
 def edit_task(index):
     #Create instance from edit form 
     edit_task_form = EditTaskForm()
@@ -54,6 +57,7 @@ def edit_task(index):
     
 #Delete task routing
 @tasks_bp.route("/deletetask/<int:index>")
+@login_required
 def delete_task(index):
 
     db = get_db()
@@ -70,6 +74,7 @@ def delete_task(index):
 
 #Create task routing
 @tasks_bp.route("/createtask/<int:index>", methods=["POST" , "GET"])
+@login_required
 def create_task(index):
     
     create_task = CreateTaskForm()
@@ -92,6 +97,7 @@ def create_task(index):
 
 #Sort task routing
 @tasks_bp.route("/sorttask/<int:list_index>")
+@login_required
 def sort(list_index):
 
     #Connecting to the database
