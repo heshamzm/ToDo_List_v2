@@ -1,30 +1,31 @@
-from flask import Flask, render_template, redirect, url_for, request, Blueprint
+from flask import Flask, render_template, redirect, url_for, request, Blueprint, session
 import sqlite3
 import datetime
 from functools import wraps
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, validators, TextAreaField
 from to_do_tasks.db import get_db
-
+from ..forms import EditNameForm, CreateTaskList
 
 
 # define our blueprint
 taskslist_bp = Blueprint('taskslist', __name__)
 
-#Create edit task list WTForm
-class EditNameForm(FlaskForm):
-    new_name = StringField("New Name: ", [validators.InputRequired()])
-    submit = SubmitField("Edit Name")
+def login_required(function):
+    @wraps(function)
+    
+    def check(*args, **kwargs):        
 
-#Create create task list WTForm
-class CreateTaskList(FlaskForm):
-    name = StringField("Name : ", [validators.InputRequired()])
-    submit = SubmitField("Create")
-
+        if session['uid']:
+            return function(*args, **kwargs)
+            
+        else:
+            return redirect('/login')
+            
+    return check
 
 
 #Task list routing
-@taskslist_bp.route("/task_list")
+@login_required
+@taskslist_bp.route("/")
 def task_lists():
 
     # connecting to the database

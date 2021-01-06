@@ -21,12 +21,28 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><i class="fas fa-bars"></i> To-Do List</a>
 
+      <ul class="navbar-nav ml-auto">
+      {% if session['uid'] %}
+      <label style="color: beige;"> Hello, {{ session['username'] }} ! </label>
+      {% endif %}
+      </ul>
 
       <ul class="navbar-nav ml-auto">
 
         <li class="nav-item">
-          <a class="btn btn-primary " href="/add/user" ;">AddUser</a> <a class="btn btn-danger " href="/logout"
-            ;">LogOut</a>
+
+          {% if session['uid'] %}
+
+          
+          <a class="btn btn-danger " href="/logout" ;">LogOut</a>
+
+          {% else %}
+
+          <a class="btn btn-primary " href="/add/user" ;">Sign Up</a>
+          <a class="btn btn-primary " href="/login" ;">Login</a>
+
+          {% endif %}
+
         </li>
 
       </ul>

@@ -2,26 +2,11 @@ from flask import Flask, render_template, redirect, url_for, request, Blueprint,
 import sqlite3
 import datetime
 from functools import wraps
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, TextAreaField,RadioField , SelectField
 from to_do_tasks.db import get_db
+from ..forms import LoginForm, AddUser
 
 # define our blueprint
 user_bp = Blueprint('user', __name__)
-
-#Create login WTForm
-class LoginForm(FlaskForm):
-    username = StringField("Username : ", [validators.InputRequired()])
-    password = PasswordField("Password : ", [validators.InputRequired()])
-    submit = SubmitField("Log In")
-
-#Create user WTForm
-class AddUser(FlaskForm):
-    username = StringField("Username : ", [validators.InputRequired()])
-    password = PasswordField("Password : ", [validators.InputRequired()])
-    first_name = StringField("first name : ", [validators.InputRequired()])
-    last_name = StringField("last name : ", [validators.InputRequired()])
-    submit = SubmitField("Add User")
 
 
 @user_bp.route('/add/user', methods=['GET', 'POST'])
@@ -42,12 +27,12 @@ def add_user():
         # insert user into DB
         try:
             # execute our insert SQL statement
-            db.execute("INSERT INTO users (username, password , firstname , lastname  ) VALUES (?, ? , ? , ?);", (username, password, first_name,last_name,))
+            db.execute("INSERT INTO users (username, password , firstname , lastname) VALUES (?, ? , ? , ?);", (username, password, first_name, last_name,))
 
             # write changes to DB
             db.commit()
             
-            return redirect(url_for('taskslist.task_lists'))
+            return redirect(url_for('user.login'))
 
         except sqlite3.Error as er:
             print('SQLite error: %s' % (' '.join(er.args)))
@@ -56,9 +41,11 @@ def add_user():
     return render_template('user/add.html' , form = user )
 
 
-@user_bp.route('/', methods =['POST','GET'])
+@user_bp.route('/login', methods =['POST','GET'])
 def login():
+
     login = LoginForm()
+
     if login.validate_on_submit():
         # read values from the login wtform
         username = login.username.data
@@ -70,30 +57,37 @@ def login():
         # insert user into db
         try:
             # get user by username
-            user= db.execute('SELECT * FROM users WHERE username LIKE ?',(username,)).fetchone()
-            # check if username exists
-            if user  != None:
-                # check if credentials are valid
-                if user['username'] == username and user['password'] == password:
-                    # store the user ID in the session  
+            user = db.execute('SELECT * FROM users WHERE username LIKE ?',(username,)).fetchone()
+            
+            # check if user exists in db
+            if user != None:
+
+                # check if password is correct
+                if user['password'] == password :
+                    
+                    # store the user id and username in the session  
                     session['uid'] = user['id']  
                     session['username'] = user['username']
-            return redirect(url_for('taskslist.task_lists'))
+
+                    return redirect(url_for('taskslist.task_lists'))
+
+                else:
+                    print("Wrong Password!")
+                    
+            else:
+                return redirect(url_for('user.add_user'))
 
         except sqlite3.Error as er:
             print('SQLite error: %s' % (' '.join(er.args)))
             return redirect("/404") 
-        # render the login template
-        
-    return render_template('login/login.html', form = login)    
 
+        
+    return render_template('user/login.html', form = login)
+          
 
 @user_bp.route('/logout')
 def logout():
-    # pop 'uid' from session
     session.clear()
-
-    # redirect to index
     return redirect("/")
 
 

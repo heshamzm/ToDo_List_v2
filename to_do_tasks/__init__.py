@@ -30,7 +30,7 @@ def create_app(test_config=None):
 
     # import helper DB functions
     from . import db
-    db.init_app(app)    
+    db.init_app(app)
 
 
     # register the 'tasks' blueprint

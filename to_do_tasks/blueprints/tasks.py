@@ -2,28 +2,11 @@ from flask import Flask, render_template, redirect, url_for, request, Blueprint
 import sqlite3
 import datetime
 from functools import wraps
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, validators, TextAreaField,RadioField , SelectField
 from to_do_tasks.db import get_db
+from ..forms import EditTaskForm, CreateTaskForm
 
 #Define our blueprint
 tasks_bp = Blueprint('tasks', __name__)
-
-#Create edit WTForm
-class EditTaskForm(FlaskForm):
-    new_name = StringField("New Name: ", [validators.InputRequired()])
-    new_description = TextAreaField("New Description: ", [validators.InputRequired()])
-    status = RadioField('Status:', choices=['New','In progress','Done'])
-    priority = RadioField('Priority:', choices=['Low','Medium','High'])
-    submit = SubmitField("Edit Task")
-
-#Create task WTForm
-class CreateTaskForm(FlaskForm):
-    new_name = StringField("New Name: ", [validators.InputRequired()])
-    new_description = TextAreaField("New Description: ", [validators.InputRequired()])
-    priority = RadioField('Priority:', choices=['Low','Medium','High'])
-    submit = SubmitField("Create Task")
-
 
 #Tasks routing
 @tasks_bp.route("/tasks/<int:list_index>")
@@ -32,11 +15,13 @@ def tasks_(list_index):
     #Get the DB connection
     db = get_db()
 
+    tasklist = db.execute(f"SELECT * FROM taskslist WHERE id = {list_index}").fetchone()
+
     #Get tasks by tasks list id
     tasks = db.execute(f"SELECT * FROM tasks WHERE taskslist_id = {list_index}").fetchall()
 
     #Render the tasks template
-    return render_template("tasks/tasks.html", tasks = tasks, list_index = list_index)
+    return render_template("tasks/tasks.html", tasklist = tasklist, tasks = tasks, list_index = list_index)
 
 
 #Edit task routing
@@ -77,11 +62,10 @@ def delete_task(index):
     
     #Deleye value from database
     db.execute(f"DELETE FROM tasks WHERE id = '{index}' ")
-    print(task_list_id)     
+        
     db.commit()
 
     return redirect(url_for('tasks.tasks_' , list_index = task_list_id['taskslist_id']))
-    #https://stackoverflow.com/questions/53126234/why-does-a-database-query-in-python-not-return-an-integer-value
 
 
 #Create task routing
@@ -113,10 +97,12 @@ def sort(list_index):
     #Connecting to the database
     db = get_db()
 
-    tasks = db.execute("""SELECT id, name, last_updated, created_at,status,priority,description 
-        FROM tasks
-        WHERE taskslist_id LIKE ? 
-        ORDER BY name ASC""",(list_index,)
+    tasklist = db.execute(f"SELECT * FROM taskslist WHERE id = {list_index}").fetchone()
+
+    tasks = db.execute("""SELECT id, name, last_updated, created_at, status, priority, description 
+FROM tasks
+WHERE taskslist_id LIKE ? 
+ORDER BY name ASC""",(list_index,)
     ).fetchall()
 
-    return render_template("tasks/tasks.html", tasks = tasks, list_index = list_index)
+    return render_template("tasks/tasks.html", tasklist = tasklist, tasks = tasks, list_index = list_index)
