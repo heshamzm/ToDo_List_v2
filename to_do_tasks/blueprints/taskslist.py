@@ -11,19 +11,19 @@ from to_do_tasks.db import get_db
 # define our blueprint
 taskslist_bp = Blueprint('taskslist', __name__)
 
-
+#Create edit task list WTForm
 class EditNameForm(FlaskForm):
     new_name = StringField("New Name: ", [validators.InputRequired()])
     submit = SubmitField("Edit Name")
 
-
+#Create create task list WTForm
 class CreateTaskList(FlaskForm):
     name = StringField("Name : ", [validators.InputRequired()])
     submit = SubmitField("Create")
 
 
 
-# tasklist routing
+#Task list routing
 @taskslist_bp.route("/task_list")
 def task_lists():
 
@@ -34,8 +34,7 @@ def task_lists():
 
     return render_template("tasks_list/tasklists.html", lists = lists)
 
-
-
+#Edit task list routing
 @taskslist_bp.route("/editname/<int:index>" , methods=["POST" , "GET"])
 def edit_tasklist_name(index):
 
@@ -56,8 +55,7 @@ def edit_tasklist_name(index):
 
     return render_template("tasks_list/edit_name.html", form = edit_name_form)
 
-
-
+#Delete task list routing
 @taskslist_bp.route("/deletetasklist/<int:index>")
 def delete_tasklist(index):
 
@@ -70,9 +68,7 @@ def delete_tasklist(index):
 
     return redirect(url_for("taskslist.task_lists"))
 
-
-
-
+#Create task list routing
 @taskslist_bp.route("/createtasklist" , methods = ["GET","POST"])
 def create_tasklist():
     create_tasklist = CreateTaskList()
@@ -92,13 +88,14 @@ def create_tasklist():
 
     return render_template("tasks_list/create_tasklist.html", form = create_tasklist )
 
-
+#Sort task list routing
 @taskslist_bp.route("/sort_list")
 def sort():
 
     # connecting to the database
     db = get_db()
 
+    #Retrieve task list in alphabetical order
     lists = db.execute('SELECT id, name, last_updated, created_at'
         ' FROM taskslist'
         ' ORDER BY name ASC'
