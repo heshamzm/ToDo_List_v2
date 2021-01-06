@@ -117,9 +117,10 @@ def sort(list_index):
     # connecting to the database
     db = get_db()
 
-    tasks = db.execute('SELECT id, name, last_updated, created_at,status,priority,description'
-        ' FROM tasks'
-        ' ORDER BY name ASC'
+    tasks = db.execute("""SELECT id, name, last_updated, created_at,status,priority,description 
+        FROM tasks
+        WHERE taskslist_id LIKE ? 
+        ORDER BY name ASC""",(list_index,)
     ).fetchall()
 
     return render_template("tasks/tasks.html", tasks = tasks, list_index = list_index)
