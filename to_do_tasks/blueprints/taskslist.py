@@ -14,18 +14,18 @@ def login_required(function):
     
     def check(*args, **kwargs):        
 
-        if session['uid']:
+        if 'uid' in session:
             return function(*args, **kwargs)
             
         else:
-            return redirect('/login')
+            return redirect(url_for('user.login'))
             
     return check
 
 
 #Task list routing
-@login_required
 @taskslist_bp.route("/")
+@login_required
 def task_lists():
 
     # connecting to the database
